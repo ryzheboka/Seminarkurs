@@ -1,3 +1,4 @@
 image_processing/data/
 __pycache__/
 .DS_Store
+image_processing/.ipynb_checkpoints
