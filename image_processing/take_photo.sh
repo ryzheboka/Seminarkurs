@@ -7,7 +7,7 @@ counter=1
 
 while [ $counter -le 15 ]
 do
-    fswebcam -r 224x224 --no-banner "$1/image$(date +%s.%n).jpg" # resolution should match the specified input size
+    fswebcam --no-banner "$1/image$(date +%s.%n).jpg" # resolution should match the specified input size
     echo $counter
     sleep 2
     ((counter++))

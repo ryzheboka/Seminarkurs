@@ -14,7 +14,7 @@ counter=1
 
 while [ $counter -le 10 ]
 do
-    fswebcam -r 224x224 --no-banner "temporary_images/image.jpg"
+    fswebcam --no-banner "temporary_images/image.jpg"
     sleep $1
     rm "temporary_images/image.jpg"
     ((counter++))
