@@ -17,6 +17,7 @@ The images are labeled as following:
     cm - 4
     cr - 5
     nl - 6 (nothing)
+    nm - 7 (black screen -> a camera error, take one more photo)
 
 Writes both the images and the labels in npy format into directory "data"
 to run label_images.py, you need the directory "data" with the same path as the script
@@ -69,6 +70,9 @@ if __name__ == "__main__":
         if ".jpg" in file:
             my_images.append(np.asarray(Image.open(directory + "/" + file)))
 
+    #   saving images
+    np.save("data/processed_" + directory.split("/")[-1], np.array(my_images))
+
     while len(my_images) > 4:
         #   labeling 4 next images
         show_images(my_images[:4], range(1, 5))
@@ -77,7 +81,6 @@ if __name__ == "__main__":
     #   labeling the rest
     show_images(my_images, range(1, len(my_images) + 1))
 
-    #   saving
+    #   saving labels
     np.save("data/labels_" + directory.split("/")[-1], np.array(labels))
-    np.save("data/processed_" + directory.split("/")[-1], np.array(my_images))
     print(os.listdir(directory))
