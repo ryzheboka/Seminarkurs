@@ -15,6 +15,7 @@ counter=1
 while [ $counter -le 10 ]
 do
     fswebcam --no-banner "temporary_images/image.jpg"
+    python3 evaluate_model.py
     sleep $1
     rm "temporary_images/image.jpg"
     ((counter++))
