@@ -65,9 +65,9 @@ if __name__ == "__main__":
 
     if os.path.isfile("data/x_no_augmentation_" + directory.split("/")[-1]+".npy"):
         #   read labeled images
-        my_images = np.load("data/x_no_augmentation_" + directory.split("/")[-1]+".npy")
-        labels = np.load("data/y_no_augmentation_" + directory.split("/")[-1]+".npy")
-        labeled_names = np.load("data/file_names_" + directory.split("/")[-1]+".npy")
+        my_images = np.load("data/x_no_augmentation_" + directory.split("/")[-1]+".npy").tolist()
+        labels = np.load("data/y_no_augmentation_" + directory.split("/")[-1]+".npy").tolist()
+        labeled_names = np.load("data/file_names_" + directory.split("/")[-1]+".npy").tolist()
     else:
         my_images = list()  # initializing a list with images
         labels = list()  # initializing a list with labels
@@ -93,9 +93,9 @@ if __name__ == "__main__":
 
     # labeling the rest
     if len(current_images):
-        show_images(current_images, range(1, len(my_images) + 1))
+        show_images(current_images, range(1, len(current_images) + 1))
 
     #   saving labels, images and corresponding file names
-    np.save("data/y_no_augmentation" + directory.split("/")[-1], np.array(labels))
-    np.save("data/x_no_augmentation" + directory.split("/")[-1], np.array(my_images))
+    np.save("data/y_no_augmentation_" + directory.split("/")[-1], np.array(labels))
+    np.save("data/x_no_augmentation_" + directory.split("/")[-1], np.array(my_images))
     np.save("data/file_names_" + directory.split("/")[-1], np.array(labeled_names))

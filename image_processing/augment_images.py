@@ -20,10 +20,11 @@ if __name__ == "__main__":
     directory = sys.argv[1]  # reads the path where to read the data from (first command line argument)
     reflection_dict = {0: 2, 1: 1, 2: 0, 3: 5, 4: 4, 5: 3, 6: 6, 7: 7}  # number equivalents for flipped images
     my_images = np.load("data/x_no_augmentation_" + directory.split("/")[-1]+".npy")   # used globally
-    labels = np.load("data/y_no_augmentation" + directory.split("/")[-1]+".npy")   # used globally
+    print(my_images.shape)
+    labels = np.load("data/y_no_augmentation_" + directory.split("/")[-1]+".npy")   # used globally
 
     a_images, a_labels = augmentation()
 
     #   save labels (y) and images (x)
-    np.save("data/y_" + directory.split("/")[-1], np.stack((labels, a_labels)))
-    np.save("data/x_" + directory.split("/")[-1], np.stack((my_images, a_images)))
+    np.save("data/y_" + directory.split("/")[-1], np.concatenate((labels, a_labels),0))
+    np.save("data/x_" + directory.split("/")[-1], np.concatenate((my_images, a_images),0))
