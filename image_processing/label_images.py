@@ -53,34 +53,49 @@ def show_images(ims, titels):
     plt.subplots_adjust(wspace=0.1, hspace=0.1)
     plt.show(block=False)  # block = False means input is accepted during show
     for j in range(len(ims)):
-        usr_label = input("Write the label for the picture " + str(j+1) + ": ")
-        labels.append(labels_dictionary[usr_label[0]] + labels_dictionary[usr_label[1]])
+        usr_label = input("Write the label for the picture " + str(j + 1) + ": ")
+        label = labels_dictionary[usr_label[0]] + labels_dictionary[usr_label[1]]
+        labels.append(label)
     plt.close()
 
 
 if __name__ == "__main__":
 
-    directory = sys.argv[1]     # reads the path where to read the data from (first command line argument)
-    labels_dictionary = {"v": 0, "c": 3, "l": 0, "m": 1, "r": 2, "n": 6}    # number equivalents for letter-labels
-    my_images = list()  # initializing a list with images
-    labels = list()     # initializing a list with labels
+    directory = sys.argv[1]  # reads the path where to read the data from (first command line argument)
+
+    if os.path.isfile("data/x_no_augmentation_" + directory.split("/")[-1]+".npy"):
+        #   read labeled images
+        my_images = np.load("data/x_no_augmentation_" + directory.split("/")[-1]+".npy")
+        labels = np.load("data/y_no_augmentation_" + directory.split("/")[-1]+".npy")
+        labeled_names = np.load("data/file_names_" + directory.split("/")[-1]+".npy")
+    else:
+        my_images = list()  # initializing a list with images
+        labels = list()  # initializing a list with labels
+        labeled_names = list()
+
+    labels_dictionary = {"v": 0, "c": 3, "l": 0, "m": 1, "r": 2, "n": 6}  # number equivalents for letter-labels
+
+    current_images = list()
 
     for file in os.listdir(directory):
         #   reading all images into my_images
-        if ".jpg" in file:
-            my_images.append(np.asarray(Image.open(directory + "/" + file)))
+        if ".jpg" in file and file not in labeled_names:
+            print(file)
+            image_array = np.asarray(Image.open(directory + "/" + file))
+            current_images.append(image_array)
+            my_images.append(image_array)
+            labeled_names.append(file)
 
-    #   saving images
-    np.save("data/processed_" + directory.split("/")[-1], np.array(my_images))
-
-    while len(my_images) > 4:
+    while len(current_images) > 4:
         #   labeling 4 next images
-        show_images(my_images[:4], range(1, 5))
-        my_images = my_images[4:]   # deleting labeled images from list
+        show_images(current_images[:4], range(1, 5))
+        current_images = current_images[4:]  # deleting labeled images from list
 
-    #   labeling the rest
-    show_images(my_images, range(1, len(my_images) + 1))
+    # labeling the rest
+    if len(current_images):
+        show_images(current_images, range(1, len(my_images) + 1))
 
-    #   saving labels
-    np.save("data/labels_" + directory.split("/")[-1], np.array(labels))
-    print(os.listdir(directory))
+    #   saving labels, images and corresponding file names
+    np.save("data/y_no_augmentation" + directory.split("/")[-1], np.array(labels))
+    np.save("data/x_no_augmentation" + directory.split("/")[-1], np.array(my_images))
+    np.save("data/file_names_" + directory.split("/")[-1], np.array(labeled_names))
