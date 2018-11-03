@@ -11,14 +11,13 @@
 
 mkdir temporary_images
 counter=1
-
-python3 load_and_use_model.py
-
+sleep 300
 while [ $counter -le 10 ]
 do
     fswebcam --no-banner "temporary_images/image.jpg"
-    sleep $1
+    sleep 300
     rm "temporary_images/image.jpg"
+    echo $counter  
     ((counter++))
 done
 
