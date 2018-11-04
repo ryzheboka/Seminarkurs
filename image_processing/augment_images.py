@@ -3,17 +3,21 @@
 import numpy as np
 import sys
 
-
-def augmentation():
+def augment(augment_function):
+    """ returns a tuple with an array with flipped version of each image from my_images and an array of labels"""
     #   initializing arrays with augmented data
     augmented_images = np.zeros_like(my_images)
     augmented_labels = np.zeros_like(labels)
 
     for i, image in enumerate(my_images):   # iterate over each image and corresponding index
-        augmented_images[i] = (np.fliplr(image))  # augment image and insert it
+        augmented_images[i] = (augment_function(image))  # augment image and insert it
         augmented_labels[i] = (reflection_dict[labels[i]])   # read the corresponding label and insert it
 
     return augmented_images, augmented_labels
+
+def noise(image):
+    noise = 1.-(np.random.random(my_images[0].shape)*0.2)
+    return image*noise
 
 if __name__ == "__main__":
 
@@ -23,8 +27,8 @@ if __name__ == "__main__":
     print(my_images.shape)
     labels = np.load("data/y_no_augmentation_" + directory.split("/")[-1]+".npy")   # used globally
 
-    a_images, a_labels = augmentation()
-
+    flipped_images, flipped_labels = augment(np.fliplr)
+    noisy_images, noisy_labels = augment(noise)
     #   save labels (y) and images (x)
-    np.save("data/y_" + directory.split("/")[-1], np.concatenate((labels, a_labels),0))
-    np.save("data/x_" + directory.split("/")[-1], np.concatenate((my_images, a_images),0))
+    np.save("data/y_" + directory.split("/")[-1], np.concatenate((labels, flipped_labels, noisy_labels),0))
+    np.save("data/x_" + directory.split("/")[-1], np.concatenate((my_images, flipped_images, noisy_images),0))
