@@ -1,4 +1,4 @@
-"""label_images.py [path to the image-directory]: Used for easy data labeling according to following rules:
+"""label_images.py [path to the image-directory] [count_position]: Used for easy data labeling according to following rules:
     violet candle is denoted with "v" by user
     cub is denotes with "c" by user
     "l" means the object is on the left side
@@ -9,7 +9,7 @@ if there are two objects, only the candle is recognized
 You should first note the kind of the object on the screen, and then it's place
 Images are expected in specified directory
 
-The images are labeled as following:
+if count_position is True, the images are labeled as following:
     vl - 0
     vm - 1
     vr - 2
@@ -18,6 +18,12 @@ The images are labeled as following:
     cr - 5
     nl - 6 (nothing)
     nm - 7 (black screen -> a camera error, take one more photo)
+
+else, the images are labeled in the following way:
+    v - 0
+    c - 1
+    n - 2 (nothing)
+    e - 3 (camera error)
 
 Writes both the images and the labels in npy format into directory "data"
 to run label_images.py, you need the directory "data" with the same path as the script
@@ -62,6 +68,7 @@ def show_images(ims, titels):
 if __name__ == "__main__":
 
     directory = sys.argv[1]  # reads the path where to read the data from (first command line argument)
+    classify_place = sys.argv[2]    # if true, define the position in label, else define only the class without position
 
     if os.path.isfile("data/x_no_augmentation_" + directory.split("/")[-1]+".npy"):
         #   read labeled images
@@ -73,8 +80,10 @@ if __name__ == "__main__":
         labels = list()  # initializing a list with labels
         labeled_names = list()
 
-    labels_dictionary = {"v": 0, "c": 3, "l": 0, "m": 1, "r": 2, "n": 6}  # number equivalents for letter-labels
-
+    if classify_place:
+        labels_dictionary = {"vl": 0,"vm": 1,"vr": 2, "c": 3, "l": 0, "m": 1, "r": 2, "n": 6}  # number equivalents for letter-labels
+    else:
+        labels_dictionary = {"v": 0, "c": 1}
     current_images = list()
 
     for file in os.listdir(directory):
