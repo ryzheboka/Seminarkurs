@@ -60,7 +60,7 @@ def show_images(ims, titels):
     plt.show(block=False)  # block = False means input is accepted during show
     for j in range(len(ims)):
         usr_label = input("Write the label for the picture " + str(j + 1) + ": ")
-        label = labels_dictionary[usr_label[0]] + labels_dictionary[usr_label[1]]
+        label = labels_dictionary[usr_label]
         labels.append(label)
     plt.close()
 
@@ -69,6 +69,7 @@ if __name__ == "__main__":
 
     directory = sys.argv[1]  # reads the path where to read the data from (first command line argument)
     classify_place = sys.argv[2]    # if true, define the position in label, else define only the class without position
+    print(classify_place)
 
     if os.path.isfile("data/x_no_augmentation_" + directory.split("/")[-1]+".npy"):
         #   read labeled images
@@ -80,16 +81,15 @@ if __name__ == "__main__":
         labels = list()  # initializing a list with labels
         labeled_names = list()
 
-    if classify_place:
-        labels_dictionary = {"vl": 0,"vm": 1,"vr": 2, "c": 3, "l": 0, "m": 1, "r": 2, "n": 6}  # number equivalents for letter-labels
+    if classify_place==0:
+        labels_dictionary = {"vl": 0,"vm": 1,"vr": 2, "cl": 3, "cm": 4, "cr": 5, "nl": 6, "nm": 7}  # number equivalents for letter-labels
     else:
-        labels_dictionary = {"v": 0, "c": 1}
+        labels_dictionary = {"v": 0, "c": 1, "n": 2, "e": 3}
     current_images = list()
 
     for file in os.listdir(directory):
         #   reading all images into my_images
         if ".jpg" in file and file not in labeled_names:
-            print(file)
             image_array = np.asarray(Image.open(directory + "/" + file))
             current_images.append(image_array)
             my_images.append(image_array)
