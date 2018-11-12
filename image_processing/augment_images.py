@@ -24,10 +24,10 @@ def noise(image):
 if __name__ == "__main__":
 
     directory = sys.argv[1]  # reads the path where to read the data from (first command line argument)
-    if sys.argv[2]:
+    if sys.argv[2] == '1':
         reflection_dict = {0: 2, 1: 1, 2: 0, 3: 5, 4: 4, 5: 3, 6: 6, 7: 7}  # number equivalents for flipped images
     else:
-        reflection_dict = {i:i for i in range(8)}
+        reflection_dict = {i:i for i in range(4)}
     my_images = np.load("data/x_no_augmentation_" + directory.split("/")[-1]+".npy")   # used globally
     print(my_images.shape)
     labels = np.load("data/y_no_augmentation_" + directory.split("/")[-1]+".npy")   # used globally

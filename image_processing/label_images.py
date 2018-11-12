@@ -9,7 +9,7 @@ if there are two objects, only the candle is recognized
 You should first note the kind of the object on the screen, and then it's place
 Images are expected in specified directory
 
-if count_position is True, the images are labeled as following:
+if count_position is '1', the images are labeled as following:
     vl - 0
     vm - 1
     vr - 2
@@ -81,7 +81,7 @@ if __name__ == "__main__":
         labels = list()  # initializing a list with labels
         labeled_names = list()
 
-    if classify_place==0:
+    if classify_place=="1":
         labels_dictionary = {"vl": 0,"vm": 1,"vr": 2, "cl": 3, "cm": 4, "cr": 5, "nl": 6, "nm": 7}  # number equivalents for letter-labels
     else:
         labels_dictionary = {"v": 0, "c": 1, "n": 2, "e": 3}
