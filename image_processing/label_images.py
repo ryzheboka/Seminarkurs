@@ -37,31 +37,45 @@ import os
 
 
 def show_images(ims, titels):
-    """partially taken from another project, needs to be commented properly
-
+    """
     ims: list with images in form of numpy arrays
     titels: list with names of given images
 
     shows ims and asks the user for their labels. Then appends the label to the global list of all labels."""
     fig = plt.figure()
-
     size = len(ims)
-    rows = int(math.ceil(math.sqrt(size)) * 100)
-    cols = math.ceil((size / (rows / 100))) * 10
+
+    """
+    Pyplot has two versions for notating the parameters of Subplot:
+    The first notation: subplot(num_rows, num_cols, plot_number)
+    The second notation: subplot(num_rows*100+num_cols*10+plot_number)
+    The second notation is more convenient for smaller numbers, and is used in the snippet below
+
+    See documentation of Pyplot for details.
+    """
+    rows = int(math.ceil(math.sqrt(size)) * 100)  # number of rows in the plot is rounded square root
+    cols = math.ceil((size / (rows / 100))) * 10  # number of columns equals number of plots/number of rows (rounded up)
 
     for i in range(size):
-        sub = fig.add_subplot(rows + cols + i + 1)
-        sub.axis("off")
-        plt.title(titels[i])
+        sub = fig.add_subplot(rows + cols + i + 1)      # creating a subplot
+        sub.axis("off")     # remove Axis
+        plt.title(titels[i])    # append the title
         sub.imshow(ims[i] / 255)  # normalizing images
 
+    # put subplots together, less free space in between
     fig.tight_layout()
     plt.subplots_adjust(wspace=0.1, hspace=0.1)
-    plt.show(block=False)  # block = False means input is accepted during show
+
+    # show the figure without blocking input
+    plt.show(block=False)
+
+    # read user input for each image, translate it into label, then append the label
     for j in range(len(ims)):
         usr_label = input("Write the label for the picture " + str(j + 1) + ": ")
         label = labels_dictionary[usr_label]
         labels.append(label)
+
+    # close the plot
     plt.close()
 
 
