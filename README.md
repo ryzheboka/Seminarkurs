@@ -11,6 +11,7 @@ RaspberryPi 3+:
 - Tensorflow 1.10
 - Keras 2.2.4
 - fswebcam
+- pySerial
 
 
 Computer used for data processing:
