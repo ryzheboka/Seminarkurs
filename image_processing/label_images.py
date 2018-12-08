@@ -20,9 +20,10 @@ if count_position is '1', the images are labeled as following:
     nm - 7 (black screen -> a camera error, take one more photo)
 
 else, the images are labeled in the following way:
-    v - 0
-    c - 1
-    n - 2 (nothing)
+    l - 0
+    r - 1
+    o - 2
+    n - 4 (nothing)
     e - 3 (camera error)
 
 Writes both the images and the labels in npy format into directory "data"
@@ -98,7 +99,7 @@ if __name__ == "__main__":
     if classify_place=="1":
         labels_dictionary = {"vl": 0,"vm": 1,"vr": 2, "cl": 3, "cm": 4, "cr": 5, "nl": 6, "nm": 7}  # number equivalents for letter-labels
     else:
-        labels_dictionary = {"v": 0, "c": 1, "n": 2, "e": 3}
+        labels_dictionary = {"l": 0, "r": 1, "o": 2, "e": 3, "n": 4}
     current_images = list()
 
     for file in os.listdir(directory):
