@@ -35,7 +35,6 @@ if __name__ == "__main__":
     flipped_images, flipped_labels = augment(np.fliplr,reflection_dict)
     labels = np.concatenate((labels, flipped_labels))
     my_images = np.concatenate((my_images, flipped_images))
-    noisy_images, noisy_labels = augment(noise,{i:i for i in range(8)})
-    #   save labels (y) and images (x)
-    np.save("data/y_" + directory.split("/")[-1], np.concatenate((labels, noisy_labels),0))
-    np.save("data/x_" + directory.split("/")[-1], np.concatenate((my_images, noisy_images),0))
+
+    np.save("data/y_" + directory.split("/")[-1], labels)
+    np.save("data/x_" + directory.split("/")[-1], my_images)
