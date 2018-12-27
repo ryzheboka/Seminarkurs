@@ -6,6 +6,7 @@ import h5py
 import numpy as np
 import os
 import scipy.ndimage
+import time
 
 if __name__ == "__main__":
 
@@ -26,6 +27,9 @@ if __name__ == "__main__":
     delete_foto = ['rm', "temporary_images/image.jpg"]
 
     for i in range(10):
+        print("start sleeping")
+        time.sleep(20)
+        print("end sleeping")
         subprocess.run(take_foto)
         image = scipy.ndimage.imread("temporary_images/image.jpg")
         print("Start predicting")
