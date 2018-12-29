@@ -23,8 +23,8 @@ else, the images are labeled in the following way:
     l - 0
     r - 1
     o - 2
-    n - 4 (nothing)
-    e - 3 (camera error)
+    n - 3 (nothing)
+    e - 4 (camera error)
 
 Writes both the images and the labels in npy format into directory "data"
 to run label_images.py, you need the directory "data" with the same path as the script
@@ -99,7 +99,7 @@ if __name__ == "__main__":
     if classify_place=="1":
         labels_dictionary = {"vl": 0,"vm": 1,"vr": 2, "cl": 3, "cm": 4, "cr": 5, "nl": 6, "nm": 7}  # number equivalents for letter-labels
     else:
-        labels_dictionary = {"l": 0, "r": 1, "o": 2, "e": 3, "n": 4}
+        labels_dictionary = {"l": 0, "r": 1, "o": 2, "n": 3, "e": 4}
     current_images = list()
 
     for file in os.listdir(directory):
