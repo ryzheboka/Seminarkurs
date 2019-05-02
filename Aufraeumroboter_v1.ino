@@ -7,8 +7,8 @@
  * M3: Antrieb Greifarm
  * M4: [Leer]
  * 
- * I1: Sensor Unten
- * I2: Sensor Oben
+ * I1: Drucksensor Unten
+ * I2: Drucksensor Oben
  * I3: Abstandssensor vorne am Roboter
  * I4: Abstandssensor vorne am "Greifarm" (Höher als Kugeln/Würfel)
  */
@@ -42,6 +42,8 @@ void stop_tank(uint8_t strength = Ftduino::MAX) {
 }
 
 void turn_left(uint8_t angle, bool on_point = true) {
+  // angle: Drehung vom Motorrad, nicht vom Roboter
+  // on_point: ???
   ftduino.motor_counter(er, mtr, Ftduino::MAX/7, angle);
   if(on_point == false) {
     ftduino.motor_set(el, mpo, Ftduino::MAX);
@@ -52,6 +54,10 @@ void turn_left(uint8_t angle, bool on_point = true) {
 }
 
 void turn_right(uint8_t angle, bool on_point = true) {
+
+  // angle: Drehung vom Motorrad, nicht vom Roboter
+  // on_point: ???
+
   ftduino.motor_counter(el, mtl, Ftduino::MAX/7, angle);
   if(on_point == false) {
     ftduino.motor_set(er, mpo, Ftduino::MAX);
@@ -61,12 +67,16 @@ void turn_right(uint8_t angle, bool on_point = true) {
   }
 }
 
+// mit vorwärts vereinigbar
 void backwards(uint8_t run_speed = Ftduino::MAX) {
   ftduino.motor_set(er, mtl, run_speed);
   ftduino.motor_set(el, mtr, run_speed);
 }
 
+
+// die nächsten zwei Funktionen könnten zu einer zusammengefasst werden, die als Argument up oder down hat
 void grapple_down(){
+  // Die nächsten zwei Zeilen könnten eventuell auch nur einmal ausgeführt werden, dann lieber nicht in der Funktion
   ftduino.input_set_mode(Ftduino::I1, Ftduino::SWITCH); // Set Input pin I1 to the higher one of those touch sensors
   ftduino.input_set_mode(Ftduino::I2, Ftduino::SWITCH); // Set Input pin I2 to the lower one of those touch sensors
   ftduino.motor_set(eg, mtl, Ftduino::MAX/7);
@@ -75,6 +85,7 @@ void grapple_down(){
 }
 
 void grapple_up(){
+  // Die nächsten zwei Zeilen könnten eventuell auch nur einmal ausgeführt werden, dann lieber nicht in der Funktion
   ftduino.input_set_mode(Ftduino::I1, Ftduino::SWITCH); // Set Input pin I1 to the higher one of those touch sensors
   ftduino.input_set_mode(Ftduino::I2, Ftduino::SWITCH); // Set Input pin I2 to the lower one of those touch sensors
   ftduino.motor_set(eg, mtr, Ftduino::MAX/7);
@@ -95,7 +106,7 @@ uint8_t camera_result_rough(){                               // Überprüft per 
                                                              // 1 = Gegenstand
   
 }
-
+// Elena fügt's ein
 uint8_t camera_result_smooth(){                              // Überprüft per Kamera, was für ein Gegenstand vor der Kamera liegt  
                                                              // 0 = Kugel
                                                              // 1 = Würfel Farbe 1
