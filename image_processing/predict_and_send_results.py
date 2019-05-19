@@ -42,7 +42,6 @@ if __name__ == "__main__":
     message = ser.readline()
     if message:
         print(message)
-    interpreted_message=0
     while message != "end":
         message = ser.readline()
         if message == "predict":

@@ -107,7 +107,13 @@ uint8_t camera_result_rough(){                               // Überprüft per 
   
 }
 // Elena fügt's ein
-uint8_t camera_result_smooth(){                              // Überprüft per Kamera, was für ein Gegenstand vor der Kamera liegt  
+uint8_t camera_result_smooth(){                              // Überprüft per Kamera, was für ein Gegenstand vor der Kamera liegt
+    Serial.println("predict");
+    data = arduino.readline()
+	if data:
+        return data
+// 0: "lila Lippenstift", 1: "rosa Lippenstift", 2: "Tierchen", 3: "Nichts", 4: "Fehler"
+
                                                              // 0 = Kugel
                                                              // 1 = Würfel Farbe 1
                                                              // 2 = Würfel Farbe 2
@@ -127,7 +133,9 @@ uint8_t dgu = get_distance_while_grapple_up();
 uint8_t dgd = get_distance_while_grapple_down();
 
 void loop() {                                                // Ich gehe davon aus, dass der Kasten am Greifarm max. 10 cm länge nach vorne hat. Sonst müssen alle mit * markeirten punkte angepasst werden.
-  // put your main code here, to run repeatedly:
+ Serial.println(camera_result_smooth());
+
+ /* // put your main code here, to run repeatedly:
   while(numberot < 4){
     dgu = get_distance_while_grapple_up();
     while(dgu > 10){
@@ -393,5 +401,5 @@ void loop() {                                                // Ich gehe davon a
         }
       }
     }
-  }
+  }*/
 }
