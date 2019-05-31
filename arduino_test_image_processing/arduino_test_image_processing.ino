@@ -134,6 +134,7 @@ uint8_t dgd = get_distance_while_grapple_down();
 
 void loop() {                                                // Ich gehe davon aus, dass der Kasten am Greifarm max. 10 cm länge nach vorne hat. Sonst müssen alle mit * markeirten punkte angepasst werden.
  Serial.println(camera_result_smooth());
+ Serial.println("end");
 
  /* // put your main code here, to run repeatedly:
   while(numberot < 4){

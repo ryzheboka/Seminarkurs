@@ -46,6 +46,8 @@ if __name__ == "__main__":
         message = ser.readline()
         if message == "predict":
             result = predict()
-            ser.write(result);
+            ser.write(result)
+        else:
+            print("Message from arduino: %s",message)
 
     subprocess.run(["rm", "-r", "temporary_images"])

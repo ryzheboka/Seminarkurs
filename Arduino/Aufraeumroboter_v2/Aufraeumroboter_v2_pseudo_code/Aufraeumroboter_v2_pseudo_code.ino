@@ -209,6 +209,8 @@ void grapple_the_item(){
 }
 
 void going_back_to_start_position_of_sorting_from_the_sorting_area(){
+// Kann man's optimieren, indem er den Winkel für die Gerade strecke ausrechnet? Der ganze Bereich soll ja keine Objekte enthalten
+// Wenn das mit dem Winkel nicht funktioniert, kann man auch sich um 180 Grad umdrehen, bis zur Wand fahren, in Richtung der start_position um 90 Grad abbiegen und dann abhängig von nots nochmal entlang der Wand abbiegen
    while(nots > 0){
     dgd = get_distance_while_grapple_down();
     while(dgd > 15){
@@ -417,6 +419,7 @@ while(terminating_condition == 0){
       }
     }
     else{                                                                 // "Nimmt" den Gegenstand mit dem "Greifarm auf" und die Kamera überprüft um was es sich handelt.
+    // der Wert der Kamera bei grapple_the_item "verschwindet", weil er niergendwo gespeichert wird. Soll er zurückgegeben werden und in "item" gespeichert werden?
         grapple_the_item();
       if(where_to_turn == 0){                                             // Anschließend dreht sich der Roboter um zurückzufahren.
         turn_right(180);
@@ -424,6 +427,7 @@ while(terminating_condition == 0){
       else{
         turn_left(180);
       }
+      // Hier Optimierung möglich?
       going_back_to_start_position_of_sorting_from_the_sorting_area();    // Der Roboter begibt sich zur Startposition der ersten Bahn zurück und legt den Ball dann entweder in der direkt benachbarten Ecke (Kugel) ab, oder er fährt zu den nächsten Ecken und legt den Gegenstand dort ab (Würfel). Anschließend fährt der Roboter zurück um wieder mit der ersten Bahn anzufangen.
       if(item == 0){
         sort_a_ball();
