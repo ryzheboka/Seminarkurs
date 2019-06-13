@@ -8,6 +8,10 @@ import os
 import scipy.ndimage
 import time
 
+
+def standard(image):
+    return (image - [0.485, 0.456, 0.406]) / [0.229, 0.224, 0.225]
+
 if __name__ == "__main__":
 
     create_dir = ["mkdir", "temporary_images"]
@@ -33,7 +37,7 @@ if __name__ == "__main__":
         subprocess.run(take_foto)
         image = scipy.ndimage.imread("temporary_images/image.jpg")
         print("Start predicting")
-        label = np.argmax(model.predict(np.expand_dims(image,axis=0), 1))
+        label = np.argmax(model.predict(standard(np.expand_dims(image, axis=0)), 1))
         subprocess.run(delete_foto)
         print(labels_dict[int(label)])
 
